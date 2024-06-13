@@ -30,6 +30,7 @@ void draw3D(SDL_Renderer *renderer);
 void drawWall(SDL_Renderer *renderer, int x, int y, int b1, int b2, int t1, int t2);
 
 int main(int argc, char *argv[]) {
+    
     if (SDL_Init(SDL_INIT_EVERYTHING) != 0) {
         cout << "SDL_Init Error: " << SDL_GetError() << endl;
         return 1;
@@ -141,7 +142,7 @@ void keyPressHandler(int key) {
             P.y += dy;
             break;
         case SDLK_a: // left
-            P.a -= 4;
+            P.a -= 1;
             if(P.a < 0) P.a += 360;
             break;
         case SDLK_s: // down
@@ -149,8 +150,8 @@ void keyPressHandler(int key) {
             P.y -= dy;
             break;
         case SDLK_d: // right
-            P.a += 4;
-            if(P.a < 0) P.a -= 360;
+            P.a += 1;
+            if(P.a > 359) P.a -= 360;
             break;
         case SDLK_q: // strafe right
             P.x += dy;
@@ -161,15 +162,16 @@ void keyPressHandler(int key) {
             P.y += dx;
             break;
         case SDLK_z: // strafe left
-            P.z -= 4;
+            P.z -= 1;
             break;
         case SDLK_x: // strafe left
-            P.z += 4;
+            P.z += 1;
             break;
         default:
             cout << "unknown" << "\n";
             break;
     }
+    cout << "Player: x:" << P.x << " y:" << P.y << " a:" << P.a << endl;
 }
 
 void draw3D(SDL_Renderer *renderer) {
