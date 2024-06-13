@@ -30,7 +30,7 @@ void draw3D(SDL_Renderer *renderer);
 void drawWall(SDL_Renderer *renderer, int x, int y, int b1, int b2, int t1, int t2);
 
 int main(int argc, char *argv[]) {
-    
+
     if (SDL_Init(SDL_INIT_EVERYTHING) != 0) {
         cout << "SDL_Init Error: " << SDL_GetError() << endl;
         return 1;
@@ -123,14 +123,9 @@ void init() {
 }
 
 void drawPixel(SDL_Renderer *renderer, int x, int y, int r, int g, int b, int opacity) {
-    SDL_Rect rect;
-    rect.x = x * 1; // Escala x por 4
-    rect.y = y * 1; // Escala y por 4
-    rect.w = 1; // Ancho del píxel escalado
-    rect.h = 1; // Alto del píxel escalado
     
     SDL_SetRenderDrawColor(renderer, r, g, b, opacity);
-    SDL_RenderFillRect(renderer, &rect);
+    SDL_RenderDrawPoint(renderer, x, y);
 }
 
 void keyPressHandler(int key) {
@@ -179,7 +174,7 @@ void draw3D(SDL_Renderer *renderer) {
     double CS = M.cos[P.a], SN = M.sin[P.a];
 
     int x1 = 10 - P.x, y1 = 10 - P.y;
-    int x2 = 20 - P.x, y2 = 100 - P.y;
+    int x2 = 20 - P.x, y2 = 20 - P.y;
 
     wx[0] = x1 * CS - y1 * SN;
     wx[1] = x2 * CS - y2 * SN;
