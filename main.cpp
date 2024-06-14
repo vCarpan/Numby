@@ -67,7 +67,7 @@ int main(int argc, char *argv[]) {
         frameStart = SDL_GetTicks();
 
         while (SDL_PollEvent(&windowEvent)) {
-            cout<<"Player"<<P.x << " " << P.y << " " << P.z<<endl;
+            cout<<"Player: "<<P.x << " " << P.y << " " << P.z<<endl;
             switch (windowEvent.type) {
                 case SDL_QUIT:
                     keepRunning = false;
@@ -136,18 +136,18 @@ void keyPressHandler(int key) {
 
     switch (key) {
         case SDLK_w: // up
-            P.x+=dx;
-            P.y+=dy;
+            P.x+=dx/2;
+            P.y+=dy/2;
             break;
         case SDLK_a: // left
-            P.a-=4; if(P.a<0)P.a+=360;
+            P.a-=8; if(P.a<0)P.a+=360;
             break;
         case SDLK_s: // down
-            P.x-=dx;
-            P.y-=dy;
+            P.x-=dx/2;
+            P.y-=dy/2;
             break;
         case SDLK_d: // right
-            P.a+=4; if(P.a>359)P.a-=360;
+            P.a+=8; if(P.a>359)P.a-=360;
             break;
         case SDLK_q: // strafe left
             P.x-=dy;
@@ -179,8 +179,8 @@ void draw3D(SDL_Renderer *renderer) {
     int wx[4], wy[4], wz[4];
     float CS = M.cos[P.a], SN = M.sin[P.a];
 
-    int x1 = 40 - P.x, y1 = 10 - P.y;
-    int x2 = 40 - P.x, y2 = 290 - P.y;
+    int x1 = 100 - P.x, y1 = 10 - P.y;
+    int x2 = 100 - P.x, y2 = 30 - P.y;
 
     wx[0] = x1 * CS - y1 * SN;
     wx[1] = x2 * CS - y2 * SN;
@@ -213,11 +213,11 @@ void draw3D(SDL_Renderer *renderer) {
     wy[3] = wz[3] * 200 / wy[3] + (HEIGHT / 2);
 
     if (wx[0] > 0 && wx[0] < WIDTH && wy[0] > 0 && wy[0] < HEIGHT){
-        drawPixel(renderer, wx[0], wy[0], 0, 255, 0, 255);
+        drawPixel(renderer, wx[0], wy[0], 255, 0, 0, 255);
         //cout << "pixel en: x:" << wx[0] << " y:" << wy[0] << "\n"; 
     }
     if (wx[1] > 0 && wx[1] < WIDTH && wy[1] > 0 && wy[1] < HEIGHT){
-        drawPixel(renderer, wx[1], wy[1], 0, 255, 0, 255);
+        drawPixel(renderer, wx[1], wy[1], 255, 0, 0, 255);
         //cout << "pixel en: x:" << wx[1] << " y:" << wy[1] << "\n"; 
     }
 
@@ -236,7 +236,9 @@ void drawWall(SDL_Renderer *renderer, int x1, int x2, int b1, int b2, int t1, in
         int y1 = dyb*(x-xs+0.5)/dx+b1;
         int y2 = dyt*(x-xs+0.5)/dx+t1;
         for(y=y1; y<y2; y++){
-            drawPixel(renderer, x, y, 255, 255, 0, 255);
+            if (x > 10 && x < WIDTH-10 && y > 10 && y < HEIGHT-10){
+                drawPixel(renderer, x, y, 255, 255, 0, 255);
+            }
         }
     }
 
